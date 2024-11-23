@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>SSE</title>
+  </head>
+  <body>
+    <div id="content-wrapper">
+      Loading...
+    </div>
+
+    <script>
+      const wrapper =
+        document.getElementById(
+          "content-wrapper"
+        );
+      const eventSource =
+        new EventSource("/sse");
+      eventSource.onmessage = (
+        event
+      ) => {
+        wrapper.innerHTML += `<p>${event.data}</p>`;
+      };
+
+      eventSource.onerror = (error) => {
+        console.error(
+          "SSE Error:",
+          error
+        );
+        eventSource.close();
+      };
+    </script>
+  </body>
+</html>
